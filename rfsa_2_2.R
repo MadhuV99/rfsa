@@ -25,3 +25,22 @@ sessionInfo()
 ?openssl
 ?mean
 library(MASS)
+edit(anorexia)
+anorexia$Postwt-anorexia$Prewt
+t.test(anorexia$Postwt-anorexia$Prewt, mu=0)
+
+library("ggplot2")
+# read.<format>(“File Name”, arg1, arg2, ...)
+
+# write.<format>(dataframe, “File Name”, arg1, arg2, ...)
+
+library(xlsx)
+scores_frame <- read.xlsx("Scores.xlsx", sheetName="Sheet1")
+scores_frame$Math_Score[4]
+
+anorexia
+write.xlsx(anorexia,"anorexia.xlsx")
+
+
+
+
