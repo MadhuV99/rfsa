@@ -40,7 +40,12 @@ scores_frame$Math_Score[4]
 
 anorexia
 write.xlsx(anorexia,"anorexia.xlsx")
+write.csv(anorexia,"anorexia.csv")
 
+read.csv("Scores.csv")
 
+write.table(anorexia, "anorexia.txt",
+            quote = FALSE, sep = "\t")
 
+read.xlsx("Scores.xlsx","Sheet1")
 
