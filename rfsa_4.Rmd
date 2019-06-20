@@ -1,0 +1,33 @@
+---
+title: "Statistical Analysis With R - ggplot2"
+author: "Madhu V"
+date: "6/19/2019"
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '3'
+always_allow_html: yes
+urlcolor: blue    
+---
+
+```{r setup, include=FALSE}
+# git config --global user.email "madhuvasudevan@yahoo.com"
+# git config --global user.name "Madhu Vasudevan"
+
+knitr::opts_chunk$set(echo = TRUE, comment = NA)
+```
+
+## Graduating to ggplot2
+```{r}
+library(ggplot2)
+library(MASS)
+```
+
+## Histograms
+```{r, message=FALSE}
+ggplot(Cars93, aes(x=Price)) +
+  geom_histogram()
+```
+
+
