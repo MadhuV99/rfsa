@@ -1,0 +1,215 @@
+---
+title: "Statistical Analysis With R"
+author: "Madhu V"
+date: "6/19/2019"
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '3'
+always_allow_html: yes
+urlcolor: blue    
+---
+
+```{r setup, include=FALSE}
+# git config --global user.email "madhuvasudevan@yahoo.com"
+# git config --global user.name "Madhu Vasudevan"
+
+knitr::opts_chunk$set(echo = TRUE, comment = NA)
+```
+
+# Getting Graphic
+
+## Finding Patterns
+
+```{r cars}
+library(MASS)
+Cars93
+
+```
+
+### Graphing a distribution
+You can also embed plots, for example:
+
+```{r price, echo=FALSE}
+hist(Cars93$Price)
+```
+
+### Bar hopping 
+
+```{r}
+Cars93$Type
+table(Cars93$Type)
+barplot(table(Cars93$Type))
+```
+
+### Slicing the pie
+```{r}
+Cars93$Type
+table(Cars93$Type)
+pie(table(Cars93$Type))
+```
+
+### The plot of scatter  
+
+```{r, fig.height = 20, fig.width = 5}
+Cars93$Horsepower
+Cars93$MPG.city
+dotchart(Cars93$Horsepower, Cars93$Model)
+```
+
+### Of boxes and whiskers  
+
+```{r}
+boxplot(Cars93$Horsepower)
+```
+
+## Base R Graphics 
+
+### Histograms 
+```{r}
+hist(Cars93$Price)
+hist(Cars93$Price, 
+     xlim = c(0,70), breaks = 4,
+     xlab="Price (x $1,000)",
+  main = "Prices of 93 Models of 1993 Cars")
+```
+
+### Adding graph features 
+
+```{r}
+hist(Cars93$Price, xlab="Price (x $1,000)", xlim = c(0,70),
+  main = "Prices of 93 Models of 1993 Cars",probability
+  = TRUE)
+lines(density(Cars93$Price))
+```
+
+### Bar plots 
+```{r}
+Cars93[,"Type"]
+table(Cars93$Type)
+barplot(table(Cars93$Type))
+barplot(table(Cars93$Type),ylim=c(0,25),
+        axis.lty = "solid", space = .05,
+        xlab="Type", ylab="Frequency")
+```
+
+### Pie graphs
+```{r}
+x <- table(Cars93$Type)
+x
+pie(table(Cars93$Type))
+```
+
+### Dot charts
+```{r}
+type.frame <- data.frame(table(Cars93$Type))
+type.frame
+dotchart(type.frame$Freq,type.frame$Var1)
+dotchart(type.frame[,2],type.frame[,1])
+```
+
+### Bar plots revisited
+```{r}
+rev.values <-
+c(1000,1300,1300,1100,1400,
+  800,1200,1500,1850,2330,
+  860,1300,1400,1600,1970,
+  570,380,450,465,580,
+  155,190,210,250,300)
+space.rev <- matrix(rev.values,nrow=5,byrow = TRUE)
+colnames(space.rev) <-
+   c("1990","1991","1992","1993","1994")
+rownames(space.rev) <- 
+  c("Commercial Satellites Delivered",
+  "Satellite Services",
+  "Satellite Ground Equipment",
+  "Commercial Launches",
+  "Remote Sensing Data")
+space.rev
+color.names = c("black","grey25","grey50","grey75","white")
+barplot(space.rev,
+        xlab= "Year", ylab= "Revenue (X $1,000)", 
+        col=color.names)
+barplot(space.rev, beside = TRUE,
+        xlab= "Year", ylab= "Revenue (X $1,000)", 
+        col=color.names)
+legend(1,2500,rownames(space.rev), cex=0.7, 
+       fill = color.names, bty = "n")
+```
+
+### Barplot from dataframe?
+```{r}
+space.rev.df <- as.data.frame(space.rev)
+barplot(as.matrix(space.rev.df), beside = TRUE,
+        xlab= "Year", ylab= "Revenue (X $1,000)", 
+        col=color.names)
+legend(1,2500,rownames(space.rev.df), cex=0.7, 
+       fill = color.names, bty = "n")
+```
+
+### Scatter plots
+```{r}
+plot(Cars93$Horsepower, Cars93$MPG.city,
+  xlab="Horsepower",ylab="MPG City", main ="MPG City vs
+  Horsepower")
+```
+
+Alternatively:
+```{r}
+plot(Cars93$MPG.city ~ Cars93$Horsepower,
+   xlab="Horsepower",ylab="MPG City", main ="MPG City vs
+   Horsepower")
+```
+
+### A plot twist 
+```{r}
+plot(Cars93$Horsepower,Cars93$MPG.city, xlab="Horsepower",
+   ylab="MPG City", main = "MPG City vs Horsepower",pch=16)
+```
+
+```{r}
+str(Cars93$Cylinders)
+as.character((Cars93$Cylinders))
+plot(Cars93$Horsepower,Cars93$MPG.city, xlab="Horsepower",
+   ylab="MPG City", main = "MPG City vs Horsepower", pch
+   = as.character(Cars93$Cylinders))
+```
+
+### Scatter plot matrix
+```{r}
+cars.subset <- subset(Cars93, 
+      select = c(MPG.city,Price,Horsepower))
+head(cars.subset)
+pairs(cars.subset)
+```
+
+Adding 'Cylinders' variable to the mix
+```{r}
+cars.subset2 <- subset(Cars93, 
+      select = c(MPG.city,Price,Horsepower,Cylinders))
+head(cars.subset2)
+pairs(cars.subset2)
+```
+
+### Box plots
+```{r}
+boxplot(Cars93$Horsepower ~ Cars93$Cylinders, xlab="Cylinders",
+   ylab="Horsepower")
+
+```
+
+Alternatively
+```{r}
+boxplot(Horsepower ~ Cylinders, data = Cars93,
+xlab="Cylinders", ylab="Horsepower")
+```
+
+Alternatively:
+```{r}
+plot(Horsepower ~ Cylinders, data = Cars93,
+xlab="Cylinders", ylab="Horsepower")
+```
+
+
+
