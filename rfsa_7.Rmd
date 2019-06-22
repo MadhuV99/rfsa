@@ -1,0 +1,51 @@
+---
+title: "Rmd RfSA - Chapter 6"
+author: "Madhu V"
+date: "6/22/2019"
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '3'
+always_allow_html: yes
+urlcolor: blue 
+---
+
+```{r setup, include=FALSE}
+# git config --global user.email "madhuvasudevan@yahoo.com"
+# git config --global user.name "Madhu Vasudevan"
+
+knitr::opts_chunk$set(echo = TRUE, comment = NA)
+```
+
+```{r, message=FALSE}
+#install.packages("modeest")
+
+# x <- installed.packages()
+# x <- as.data.frame(x)
+# y <- paste(x$Package,x$LibPath)
+# y <- sort(y)
+# head(y, 20)
+
+library(MASS)
+
+```
+
+# Deviating from the Average 
+
+
+
+
+
+
+
+
+## Scratch
+```{r, include=FALSE, eval=FALSE, echo=FALSE}
+x <- c(2,3,4)
+prod(x)
+```
+
+
+
+

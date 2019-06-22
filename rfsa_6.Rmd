@@ -39,11 +39,48 @@ library(MASS)
 
 # Deviating from the Average 
 
+## Measuring Deviation
+
+### Variance in R
+```{r}
+heights <- c(50, 47, 52, 46, 45)
+var(heights)
+var(heights)*(length(heights)-1)/length(heights)
+var.p = function(x){var(x)*(length(x)-1)/length(x)}
+var.p(heights)
+```
+
+## Back to the Roots: Standard Deviation
+
+### Population standard deviation
+
+### Sample standard deviation
+
+## Standard Deviation in R
+
+```{r}
+sd(heights)
+sd(heights)*(sqrt((length(heights)-1)/length(heights)))
+sd.p=function(x){sd(x)*sqrt((length(x)-1)/length(x))}
+sd.p(heights)
+```
+
+## Conditions, Conditions, Conditions . . .
+```{r}
+with(Cars93, var(Horsepower[Origin == "USA"]))
+with(Cars93, sd(Horsepower[Origin == "USA"]))
+with(Cars93, length(Horsepower[Origin == "USA"]))
+
+with(Cars93, var(Horsepower[Origin == "non-USA"]))
+with(Cars93, sd(Horsepower[Origin == "non-USA"]))
+with(Cars93, length(Horsepower[Origin == "non-USA"]))
+
+```
 
 
 ## Scratch
 ```{r, include=FALSE, eval=FALSE, echo=FALSE}
 x <- c(2,3,4)
-prod(x)
+(prod(x))
 ```
 
