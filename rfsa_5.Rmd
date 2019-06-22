@@ -1,0 +1,134 @@
+---
+title: "Notebook RfSA - Chapter 4"
+author: "Madhu Vasudevan"
+date: "June 21, 2019"
+output:
+  html_notebook:
+    fig_caption: no
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+always_allow_html: yes
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+# git config --global user.email "madhuvasudevan@yahoo.com"
+# git config --global user.name "Madhu Vasudevan"
+
+knitr::opts_chunk$set(echo = TRUE, comment = NA)
+```
+
+```{r, message=FALSE}
+# if (!requireNamespace("BiocManager", quietly = TRUE))
+#     install.packages("BiocManager")
+# BiocManager::install(version='devel')
+# BiocManager::install("genefilter")
+#install.packages("modeest")
+
+# x <- installed.packages()
+# x <- as.data.frame(x)
+# y <- paste(x$Package,x$LibPath)
+# y <- sort(y)
+# head(y, 20)
+
+
+library(MASS)
+library(ggplot2)
+library(modeest)
+```
+
+# 4. Finding Your Center
+
+## Means: The Lure of Averages
+
+### The Average in R: mean()
+```{r}
+heights <- c(36, 42, 43, 37, 40, 45)
+mean(heights)
+```
+
+### What’s your condition?
+```{r}
+str(Cars93$Origin)
+Horsepower.USA <- Cars93$Horsepower[Cars93$Origin == "USA"]
+mean(Horsepower.USA)
+Horsepower.NonUSA <- Cars93$Horsepower[Cars93$Origin == "non-USA"]
+mean(Horsepower.NonUSA)
+```
+
+### Eliminate $-signs forth with()
+```{r}
+with(Cars93, mean(Horsepower[Origin == "USA"]))
+with(Cars93, mean(Horsepower[Origin == "USA" & Cylinders ==4]))
+```
+
+### Exploring the data
+```{r}
+ggplot(Cars93, aes(x=Horsepower)) +
+  geom_histogram(color="black", fill="white",binwidth = 10) +
+  facet_wrap(~Origin)
+```
+
+### Outliers: The flaw of averages
+```{r}
+mean(Horsepower.USA, trim =.05)
+```
+
+## Other means to an end
+
+### Geometric mean
+
+```{r}
+invest <- c(1.10,1.15,1.10,1.20,1.05)
+gm.invest <- prod(invest)^(1/(length(invest)))
+gm.invest
+```
+
+### Harmonic mean
+
+```{r}
+speeds <- c(30,50)
+1/speeds
+hm.speeds <- 1/mean(1/speeds)
+hm.speeds
+```
+
+## Medians: Caught in the Middle
+```{r}
+reading.speeds <- c(56, 78, 45, 49, 55, 62)
+mean(reading.speeds)
+replace(reading.speeds,reading.speeds == 78,180)
+reading.speeds.new <- replace(reading.speeds,reading.speeds == 78,180)
+reading.speeds.new
+mean(reading.speeds.new)
+sort(reading.speeds)
+sort(reading.speeds.new)
+```
+
+## The Median in R: median()
+```{r}
+median(reading.speeds)
+median(reading.speeds.new)
+with(Cars93, {Horsepower.Four <- Horsepower[Cylinders == 4]
+sort(Horsepower.Four)
+median(Horsepower.Four)
+})
+```
+
+### Statistics à la Mode
+```{r}
+scores <- c(1,2,2,2,3,4,4,4,5,6)
+mfv(scores)
+```
+
+
+
+## Scratch
+```{r, include=FALSE, eval=FALSE, echo=FALSE}
+x <- c(2,3,4)
+prod(x)
+```
+
+
+
