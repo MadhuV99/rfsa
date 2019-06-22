@@ -31,7 +31,88 @@ library(MASS)
 
 ```
 
-# Deviating from the Average 
+# Meeting Standards and Standings
+
+## Catching Some Z’s
+
+### Characteristics of z-scores
+
+### Exam scores
+
+## Standard Scores in R
+
+```{r}
+Horsepower.USA.Eight <- with(Cars93, Horsepower[Origin == "USA" & Cylinders == 8])
+Horsepower.USA.Eight
+scale(Horsepower.USA.Eight)
+N <- length(Horsepower.USA.Eight)
+scale(Horsepower.USA.Eight)/sqrt((N-1)/N)
+```
+
+## CACHING SOME Z’S
+```{r}
+T.Hp.USA.Eight <- round((10*scale(Horsepower.USA.Eight)+50), digits = 0)
+```
+
+## Where Do You Stand?
+
+### Ranking in R
+```{r}
+Horsepower.USA.Eight
+rank(Horsepower.USA.Eight)
+rank(-Horsepower.USA.Eight)
+tied.Horsepower <- replace(Horsepower.USA.Eight,6,200)
+tied.Horsepower
+rank(tied.Horsepower, ties.method = "average")
+rank(tied.Horsepower, ties.method = "min")
+rank(tied.Horsepower, ties.method = "max")
+```
+
+### Nth smallest, Nth largest
+```{r}
+sort(Horsepower.USA.Eight)
+sort(Horsepower.USA.Eight)[2]
+
+N <- length(Horsepower.USA.Eight)
+sort(Horsepower.USA.Eight)[N-1]
+
+sort(Horsepower.USA.Eight, decreasing = TRUE)[2]
+```
+
+### Percentiles
+```{r}
+sort(Horsepower.USA.Eight)
+?quantile
+quantile(Horsepower.USA.Eight, type = 6)
+quantile(Horsepower.USA.Eight)
+quantile(Horsepower.USA.Eight, c(.54, .68, .91))
+median(Horsepower.USA.Eight)
+summary(Horsepower.USA.Eight)
+```
+
+### Percent ranks
+```{r}
+percent.ranks <- function(x){round((rank(x)/length(x))*100, digits = 2)}
+percent.ranks(Horsepower.USA.Eight)
+```
+
+### A NEAT (MEAN) TRICK
+```{r}
+xx <- c(15,20,25,30,35,40,45,50)
+mean(xx)
+mean(xx > 15)
+7/8
+mean(xx < 25)
+mean(xx <= 25)
+mean(xx <= 28)
+```
+
+### Summarizing
+```{r}
+fivenum(Horsepower.USA.Eight)
+quantile(Horsepower.USA.Eight, type=2)
+summary(Horsepower.USA.Eight)
+```
 
 
 
@@ -42,8 +123,7 @@ library(MASS)
 
 ## Scratch
 ```{r, include=FALSE, eval=FALSE, echo=FALSE}
-x <- c(2,3,4)
-prod(x)
+
 ```
 
 
