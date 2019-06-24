@@ -1,0 +1,52 @@
+---
+title: "R notebook RfSA - Chapter 10"
+author: "Madhu V"
+date: "6/24/2019"
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '3'
+always_allow_html: yes
+urlcolor: blue 
+---
+
+
+```{r setup, include=FALSE}
+# git config --global user.email "madhuvasudevan@yahoo.com"
+# git config --global user.name "Madhu Vasudevan"
+
+knitr::opts_chunk$set(echo = TRUE, comment = NA)
+```
+
+```{r, message=FALSE}
+#install.packages("moments")
+#install.packages("tigerstats")
+
+#z <- paste(library()$results[,1],library()$results[,2])
+#z <- sort(z)
+#head(z, 20)
+
+req.lib.pkgs <- c("MASS")
+for (req.lib in req.lib.pkgs) {
+  if(! req.lib %in% (.packages())){
+    library(req.lib, character.only = TRUE)
+  }
+}  
+(.packages())
+```
+
+# One-Sample Hypothesis Testing  
+```{r}
+
+```
+
+
+## Scratch
+```{r, include=FALSE, eval=FALSE, echo=FALSE}
+
+```
+
+
+
+
