@@ -20,23 +20,144 @@ knitr::opts_chunk$set(echo = TRUE, comment = NA)
 ```
 
 ```{r, message=FALSE}
-#install.packages("modeest")
+#install.packages("moments")
+#z <- paste(library()$results[,1],library()$results[,2])
+#z <- sort(z)
+#head(z, 20)
 
-# x <- installed.packages()
-# x <- as.data.frame(x)
-# y <- paste(x$Package,x$LibPath)
-# y <- sort(y)
-# head(y, 20)
+req.lib.pkgs <- c("MASS", "moments", "ggplot2", "Hmisc")
+for (req.lib in req.lib.pkgs) {
+  if(! req.lib %in% (.packages())){
+    library(req.lib, character.only = TRUE)
+  }
+}  
+(.packages())
+```
 
+# Summarizing It All
 
-library(MASS)
+## How Many?
+```{r}
+length(Cars93)
+ncol(Cars93)
+nrow(Cars93)
+sum(Cars93$Origin == "USA")
+sum(Cars93$Origin != "USA")
+sum(Cars93$Origin == "USA" & Cars93$Cylinders == 4)
+with(Cars93, sum(Origin == "USA" & Cylinders == 4))
+Horsepower.USA.Four <- with(Cars93, Horsepower[Origin == "USA" & Cylinders == 4])
+length(Horsepower.USA.Four)
+```
+
+## The High and the Low
+
+```{r}
+max(Horsepower.USA.Four)
+min(Horsepower.USA.Four)
+```
+
+## Living in the Moments
+```{r}
+cen.mom <-function(x,y){mean((x - mean(x))^y)}
+Horsepower.USA <- with(Cars93, Horsepower[Origin == "USA"])
+cen.mom(Horsepower.USA,2)
+cen.mom(Horsepower.USA,3)
+cen.mom(Horsepower.USA,4)
 
 ```
 
-# SUmmarizing It All
+### Back to descriptives
 
-## How Many?
+### Skewness
+```{r}
+cen.mom(Horsepower.USA,3)/cen.mom(Horsepower.USA,2)^1.5
+skew <- function(x){cen.mom(x,3)/cen.mom(x,2)^1.5}
+skew(Horsepower.USA)
+skewness(Horsepower.USA)
+Horsepower.NonUSA <- with(Cars93, Horsepower[Origin == "non-USA"])
+skewness(Horsepower.NonUSA)
 
+ggplot(Cars93, aes(x=Horsepower)) +
+  geom_histogram(color="black", fill="white",binwidth = 10)+
+  facet_wrap(~Origin)
+ggplot(Cars93, aes(x=Horsepower)) +
+  geom_density() +
+  facet_wrap(~Origin)
+```
+
+### Kurtosis
+```{r}
+cen.mom(Horsepower.USA,4)/cen.mom(Horsepower.USA,2)^2
+kurt <- function(x) {cen.mom(x,4)/cen.mom(x,2)^2}
+kurt(Horsepower.USA)
+
+kurtosis(Horsepower.USA)
+kurtosis(Horsepower.NonUSA)
+```
+
+## Tuning in the Frequency
+
+### Nominal variables: table() et al
+```{r}
+car.types <-table(Cars93$Type)
+car.types
+prop.table(table(Cars93$Type))
+prop.table(car.types)
+round(prop.table(car.types),2)
+
+margin.table(car.types)
+sum(car.types)
+```
+
+### Numerical variables: hist()
+```{r}
+prices <- hist(Cars93$Price, plot=FALSE, breaks=5)
+prices
+prices.matrix <- matrix(c(prices$mids,prices$counts), ncol = 2)
+prices.frame <- data.frame(prices.matrix)
+colnames(prices.frame) <- c("Price Midpoint (X $1,000)","Frequency")
+prices.frame
+```
+
+### Cumulative frequency
+```{r}
+prices$counts
+prices$counts <- cumsum(prices$counts)
+plot(prices, main = "Cumulative Histogram", 
+     xlab = "Price", ylab = "Cumulative Frequency")
+
+```
+
+### Step by step: The empirical cumulative distribution function
+```{r}
+plot(ecdf(Cars93$Price), xlab = "Price", ylab = "Fn(Price)")
+ecdf(Cars93$Price)
+price.q <-quantile(Cars93$Price)
+ggplot(NULL, aes(x=Cars93$Price)) +
+  geom_step(stat="ecdf") +
+  labs(x= "Price X $1,000",y = "Fn(Price)") +
+  geom_vline(aes(xintercept=price.q),linetype = "dashed")
+
+```
+
+### Numerical variables: stem()
+```{r}
+rounded <- (round(sort(Cars93$Price),0))
+cat(rounded, fill = 50)
+stem(Cars93$Price)
+```
+
+## Summarizing a Data Frame
+```{r}
+autos <- subset(Cars93, select = c(MPG.city,Type, Cylinders, Price, Horsepower))
+summary(autos)
+(.packages())
+#Hmisc::describe.data.frame()
+#?hmisc
+Hmisc::datadensity(autos)
+
+
+```
 
 
 
