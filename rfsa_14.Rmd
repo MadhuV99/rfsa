@@ -1,0 +1,47 @@
+---
+title: "R Notebook"
+author: "Madhu Vasudevan"
+date: "June 25, 2019"
+output:
+  html_notebook:
+    fig_caption: no
+    toc: yes
+    toc_depth: 4
+    toc_float: yes
+always_allow_html: yes
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+# git config --global user.email "madhuvasudevan@yahoo.com"
+# git config --global user.name "Madhu Vasudevan"
+
+knitr::opts_chunk$set(echo = TRUE, comment = NA)
+```
+
+```{r, message=FALSE}
+#install.packages("moments")
+#install.packages("tigerstats")
+
+#z <- paste(library()$results[,1],library()$results[,2])
+#z <- sort(z)
+#head(z, 20)
+
+req.lib.pkgs <- c("ggplot2", "reshape2", "grid")
+for (req.lib in req.lib.pkgs) {
+  if(! req.lib %in% (.packages())){
+    library(req.lib, character.only = TRUE)
+  }
+}  
+(.packages())
+```
+
+
+
+
+
+## Scratch
+```{r, include=FALSE, eval=FALSE, echo=FALSE}
+?rnorm
+```
+
